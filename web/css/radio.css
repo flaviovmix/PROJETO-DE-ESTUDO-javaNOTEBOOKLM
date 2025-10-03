@@ -1,0 +1,98 @@
+
+.area-radio {
+    text-align: center;
+    width: 100%;
+}
+.radio-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;          /* espa�o entre op��es */
+  flex-wrap: wrap;    /* quebra linha se faltar espaco */
+  margin-bottom: 10px;
+  width: 100%;        /* garante que ocupe a largura dispon�vel */
+}
+
+.texto-prioridade {
+    margin: 5px;
+}
+
+.label-data-prevista {
+    margin-top: 15px;
+}
+
+.radio {
+  --txt: #222;                /* cor do texto padr�o (claro) */
+  --border: #7a7a7a;          /* borda do circulo */
+  --focus: #1e90ff;           /* foco teclado */
+  --disabled: #bdbdbd;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+  color: var(--txt);
+  position: relative;
+  /* melhora clique em mobile */
+  padding: 4px 2px;
+}
+
+/* Compat�vel com tema escuro (ajuste autom�tico se quiser) */
+@media (prefers-color-scheme: dark) {
+  .radio { --txt:#eee; --border:#9a9a9a; }
+}
+
+/* Input escondido, mas acess�vel */
+.radio input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  inset: 0;                    /* amplia �rea clic�vel */
+  cursor: pointer;
+}
+
+/* C�rculo visual do radio */
+.radio .dot {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+  transition: transform .12s ease, border-color .12s ease, background-color .12s ease, box-shadow .12s ease;
+  pointer-events: none;        /* clique fica no label */
+}
+
+/* Estado marcado: preenche com a cor atual (currentColor) */
+.radio input[type="radio"]:checked + .dot {
+  background: currentColor;
+  border-color: currentColor;
+  box-shadow: 0 0 0 2px color-mix(in oklab, currentColor 35%, transparent);
+}
+
+/* Foco acess�vel (teclado) */
+.radio input[type="radio"]:focus-visible + .dot {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* Hover sutil */
+.radio:hover .dot {
+  transform: scale(1.06);
+}
+
+/* Desabilitado */
+.radio input[type="radio"]:disabled + .dot,
+.radio input[type="radio"]:disabled ~ span {
+  color: var(--disabled);
+  border-color: var(--disabled);
+  cursor: not-allowed;
+}
+
+/* ===== Modificadores de cor por prioridade ===== */
+.radio--baixa  { color: #3498db; }  /* azul */
+.radio--media  { color: #f39c12; }  /* laranja */
+.radio--alta   { color: #e74c3c; }  /* vermelho */
+
+            

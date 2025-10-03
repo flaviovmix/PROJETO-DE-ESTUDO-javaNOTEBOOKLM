@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Master-Detail de Tarefas</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/radio.css">
+
+
+  <link rel="stylesheet" href="./css/tarefaMasterDetail-claro.css">
+  <link rel="stylesheet" href="./css/modal-claro.css">
+
+
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- MASTER -->
+    <div class="master">
+
+
+      <button type="reset" class="voltar" onclick="window.location.href = 'index.html'">Voltar</button>
+      <button class="btn-add" onclick="window.location.href='#'">Nova Tarefa</button>
+
+
+      <h2>Tarefa</h2>
+
+      <form id="formTarefa" method="get" action="#">
+
+        <div id="formTarefa" class="">
+          <input type="hidden" name="id_tarefa" id="id_tarefa" value="118">
+          <input type="text" name="titulo" id="titulo" placeholder="Título da tarefa" value="" required="">
+          <input type="text" name="responsavel" id="responsavel" placeholder="Responsável da tarefa" value=""
+            required="">
+
+          <textarea name="descricao" id="descricao" placeholder="Descrição da tarefa"></textarea>
+          
+          <div class="area-radio">
+
+            <div class="radio-group">
+              <span class="texto-prioridade">Prioridade</span>
+              <label class="radio radio--baixa">
+                <input type="radio" name="prioridade" value="baixa" required="" checked="">
+                <span class="dot"></span>
+                <span>Baixa</span>
+              </label>
+
+              <label class="radio radio--media">
+                <input type="radio" name="prioridade" value="media">
+                <span class="dot"></span>
+                <span>Média</span>
+              </label>
+
+              <label class="radio radio--alta">
+                <input type="radio" name="prioridade" value="alta">
+                <span class="dot"></span>
+                <span>Alta</span>
+              </label>
+            </div>
+          </div>
+          <label for="data" class="label-data-prevista">Data prevista para conclusão</label>
+          <input type="date" name="data_conclusao" id="data_conclusao" value="">
+        </div>
+
+        <div class="botoes">
+          <button id="btn-editar" type="reset" class="editar" onclick="link('#')">Editar</button>
+        </div>
+
+      </form>
+
+      <hr>
+
+      <h2>Etapas da Tarefa</h2>
+      <form id="form-etapa" class="form" action="#" method="post">
+        <div class=" ">
+          <input type="hidden" name="fk_tarefa" id="fk_tarefa" value="118">
+
+          <div class="campo">
+            <textarea name="descricao" id="descricaoDetail" placeholder="Digite a descrição..." required=""></textarea>
+          </div>
+
+          <button type="submit" class="salvar">Adicionar etapa</button>
+        </div>
+      </form>
+
+    </div>
+
+    <!-- DETAIL -->
+    <div id="area-detail" class="detail ">
+
+      <h3>Lista de etapas</h3>
+      <ul id="lista-tarefas">
+
+        <li>
+          <div>
+            <small> 15 ago - 2025 </small><br>
+            <!--<small> 2025-08-14 </small><br>-->
+            <small>RESOVOLVER PENDÊNCIA 1</small>
+          </div>
+          <a class="icone-lixeira" href="#"
+            onclick="openModalDeletar(247, 118, 'RESOVOLVER PENDENCIA 1'); return false;">
+            <i class="fas fa-trash"></i>
+          </a>
+        </li>
+
+        <li>
+          <div>
+            <small> 16 ago - 2025 </small><br>
+            <!--<small> 2025-08-14 </small><br>-->
+            <small>PENDÊNCIA 2 NÃO TEM SOLUÇÃO</small>
+          </div>
+          <a class="icone-lixeira" href="#"
+            onclick="openModalDeletar(248, 118, 'PENDENIA 2 NÃO TEM SOLUÃÃO'); return false;">
+            <i class="fas fa-trash"></i>
+          </a>
+        </li>
+
+        <li>
+          <div>
+            <small> 17 ago - 2025 </small><br>
+            <!--<small> 2025-08-14 </small><br>-->
+            <small>ENTREGUE NO PRAZO</small>
+          </div>
+          <a class="icone-lixeira" href="#" onclick="openModalDeletar(249, 118, 'ENTREGUE NO PRAZO'); return false;">
+            <i class="fas fa-trash"></i>
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+  <!-- Modal de Deletar oculto -->
+  <div class="modal-overlay" id="modalDeletar" style="display:none;">
+    <div class="modal">
+      <h2>Confirmar Exclusão</h2>
+      <div class="confirmacao">
+        <p id="texto-descricao" class="area-info"></p>
+        <form id="formDeletar" method="post" action="#">
+          <input type="hidden" name="id-detalhe" id="id-detalhe" value="0">
+          <input type="hidden" name="id-tarefa" id="id-tarefa" value="0">
+          <div class="modal-buttons">
+            <button type="submit" class="btn-deletar-confirmar" onclick="confirmarDelete()">Sim, deletar</button>
+            <button type="button" class="btn-cancelar" onclick="closeModalDeletar()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/tarefaMasterDetail.js"></script>
+  <script src="./js/Utilidades.js"></script>
+  <script>selecionarAddEtapa()</script>
+
+</body>
+
+</html>
