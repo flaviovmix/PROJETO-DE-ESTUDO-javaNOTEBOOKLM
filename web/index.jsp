@@ -1,3 +1,4 @@
+<%@page import="app.tarefas.TarefaRender"%>
 <%@page import="app.Utilidades"%>
 <%@page import="java.util.List"%>
 <%@page import="app.tarefas.TarefaBean"%>
@@ -11,8 +12,6 @@
     List<TarefaBean> tarefasInativas = tarefaDAO.listarTarefas(false);
 %>
 
-
-        
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -50,43 +49,7 @@
       <div class="tab-content content-ativas">
         <div class="task-list ">
             <% for (TarefaBean tarefa : tarefasAtivas) {  %>
-                <div class="task <%= tarefa.getPrioridade() %>">
-
-                  <div class="task-content">
-                    <div class="task-title ">
-                      <a href="novaTarefa.html" class="link-sem-estilo"><%= tarefa.getTitulo() %></a> 
-                    </div>
-                    <div class="task-meta"> 
-                      <a href="novaTarefa.html" class="link-sem-estilo"> 
-                        <span><i class="fas fa-layer-group"></i>0 etapas</span>
-                      </a> 
-                      <span><i class="fas fa-calendar-alt"></i><%= Utilidades.dateToString(tarefa.getData_criacao(), "dd MMM - yyyy")  %></span> 
-                      <span><i class="fas fa-user-alt"></i><%= tarefa.getResponsavel() %></span> 
-
-                    </div> 
-                    <span class="descricao"><%= tarefa.getDescricao() %></span>
-                  </div>
-
-                  <div class="task-actions">
-                    <div> 
-                      <label class="checkbox-container">
-                        <div class="usuario_concluir">
-                            <div class="assigned"><strong><%= Utilidades.dateToString(tarefa.getData_conclusao(), "EEEE, dd 'de' MMM 'de' yyyy")  %></strong></div>
-                          <form action="#" method="get" style="display:inline;"> 
-                            <input type="hidden" name="estado_atual" value="true">
-                            <input type="hidden" name="ativa" value="0">
-                            <input type="hidden" name="id_tarefa" value="118"> 
-                            <input type="checkbox" name="ativo">
-                          </form>
-                        </div>
-                      </label>
-                    </div> 
-                    <a href="#" class="deletar-link">
-                      <i class="fas fa-trash"></i>
-                    </a>
-                  </div>
-
-                </div>
+              <%= TarefaRender.renderizar(tarefa) %>
             <% } %>
         </div>
       </div>
@@ -94,46 +57,9 @@
       
       <!-- Conteúdo da Aba: INATIVAS -->
       <div class="tab-content content-inativas">
-
         <div class="task-list ">
           <% for (TarefaBean tarefa : tarefasInativas) {  %>
-            <div class="task baixa">
-
-              <div class="task-content">
-                <div class="task-title opaco">
-                  <a href="novaTarefa.html" class="link-sem-estilo">TAREFA</a> 
-                </div>
-                <div class="task-meta opaco"> 
-                  <a href="novaTarefa.html" class="link-sem-estilo"> 
-                    <span><i class="fas fa-layer-group"></i>0 etapas</span>
-                  </a> 
-                  <span><i class="fas fa-calendar-alt"></i>14 ago - 2025</span> 
-                  <span><i class="fas fa-user-alt"></i>Pedro Henrique</span> 
-
-                </div> 
-                <span class="descricao opaco">AQUI VAI A DESCRICAO DA TAREFA</span>
-              </div>
-
-              <div class="task-actions">
-                <div> 
-                  <label class="checkbox-container">
-                    <div class="usuario_concluir">
-                      <div class="assigned"><strong>Quinta-feira, 14 ago - 2025</strong></div>
-                      <form action="#" method="get" style="display:inline;"> 
-                        <input type="hidden" name="estado_atual" value="true">
-                        <input type="hidden" name="inativo" value="0">
-                        <input type="hidden" name="id_tarefa" value="118"> 
-                        <input type="checkbox" name="inativo" checked>
-                      </form>
-                    </div>
-                  </label>
-                </div> 
-                <a href="#" class="deletar-link">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </div>
-
-            </div>
+            <%= TarefaRender.renderizar(tarefa) %>
           <% } %>
         </div>
       </div>

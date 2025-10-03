@@ -30,6 +30,7 @@ public class TarefaDAO {
                     tarefa.setResponsavel(rs.getString("responsavel"));
                     tarefa.setData_conclusao(rs.getDate("data_conclusao"));
                     tarefa.setData_criacao(rs.getDate("data_criacao"));
+                    tarefa.setAtivo(rs.getBoolean("ativo"));
                     lista.add(tarefa);
                 }
             }

@@ -12,6 +12,7 @@ public class TarefaBean {
     private String responsavel;
     private Date data_criacao;
     private Date data_conclusao;
+    private boolean ativo;
     
     // Atributo que armazena a quantidade de subtarefas associadas a esta tarefa.
     // Pode ser nulo, por isso foi usado o tipo wrapper (Revestimento) Integer (em vez de int).
@@ -81,6 +82,14 @@ public class TarefaBean {
     }
     public void setData_conclusao(Date data_conclusao) {
         this.data_conclusao = data_conclusao;
+    }
+    
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
    
     // Retorna a quantidade de subtarefas associadas a esta tarefa.
