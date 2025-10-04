@@ -154,6 +154,28 @@
 
   <script src="./js/index.js"></script>
   <script src="./js/Utilidades.js"></script>
+  
+<script>
+    function alterarEstado(checkbox) {
+      const form = checkbox.form;
+      const id_tarefa = form.querySelector('[name=id_tarefa]').value;
+      const estado_atual = form.querySelector('[name=estado_atual]').value;
+
+      fetch('tarefa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `acao=alterar&id_tarefa=${id_tarefa}&estado_atual=${estado_atual}`
+      })
+      .then(response => {
+        if (!response.ok) throw new Error('Erro na requisição');
+        // Atualiza visualmente sem recarregar
+        const linha = checkbox.closest('.task');
+        linha.style.display = "none";
+      })
+      .catch(error => console.error('Falha ao atualizar:', error));
+    }
+</script>
+
 
 </body>
 

@@ -24,6 +24,10 @@ public class TarefaServlet extends HttpServlet {
             TarefaDAO tarefaDao = new TarefaDAO();
             tarefaDao.alterarAtivoInativo(id_detalhe, novoEstado);
             System.out.println("Novo estado: " + novoEstado + " | Id: " + id_detalhe);
+            
+            response.setContentType("application/json");
+            response.getWriter().write("{\"status\": \"ok\"}");
+            return; // impede o redirecionamento
 
         }
 

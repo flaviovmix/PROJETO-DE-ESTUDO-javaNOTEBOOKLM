@@ -72,7 +72,8 @@ public class TarefaRender {
         sb.append("    <input type=\"hidden\" name=\"acao\" value=\"alterar\">\n");
         sb.append("    <input type=\"hidden\" name=\"id_tarefa\" value=\"" + tarefa.getId_tarefa() + "\">\n");
         sb.append("    <input type=\"hidden\" name=\"estado_atual\" value=\"" + tarefa.isAtivo() + "\">\n");
-        sb.append("    <input type=\"checkbox\" " + checked + " onchange=\"this.form.submit()\">\n");
+        sb.append("    <input type=\"checkbox\" " + checked + " onchange=\"alterarEstado(this)\">\n");
+
         sb.append("  </form>\n");
 
         
