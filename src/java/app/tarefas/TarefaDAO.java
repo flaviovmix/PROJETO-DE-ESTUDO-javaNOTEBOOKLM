@@ -15,13 +15,6 @@ public class TarefaDAO {
 
         StringBuilder sql = new StringBuilder();
 
-//        sql.append("SELECT tarefas.* , (");
-//        sql.append(     "SELECT COUNT(*) ");
-//        sql.append("    FROM detalhes_tarefa ");
-//        sql.append(     "WHERE detalhes_tarefa.fk_tarefa = tarefas.id_tarefa ");
-//        sql.append(") AS quantidade_de_subtarefas ");
-//        sql.append("FROM tarefas WHERE ativo = ? ");
-        
         sql.append("SELECT ");
         sql.append("    t.*, ");
         sql.append("    COUNT(d.id_detalhe) AS quantidade_de_subtarefas ");
@@ -32,14 +25,14 @@ public class TarefaDAO {
         sql.append("GROUP BY t.id_tarefa, t.titulo");
 
         try (Connection conn = new ConexaoDB().abrirConexao();
-             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                PreparedStatement ps = conn.prepareStatement(sql.toString())) {
 
-            // aqui você passa o valor do parâmetro ?
             ps.setBoolean(1, ativoOuInativo);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     TarefaBean tarefa = new TarefaBean();
+                    tarefa.setId_tarefa(rs.getInt("id_tarefa"));
                     tarefa.setTitulo(rs.getString("titulo"));
                     tarefa.setPrioridade(rs.getString("prioridade"));
                     tarefa.setDescricao(rs.getString("descricao"));
@@ -57,6 +50,23 @@ public class TarefaDAO {
         }
 
         return lista;
+    }
+
+    public void alterarAtivoInativo(int id_tarefa, boolean ativo) {
+        String sql = "UPDATE tarefas SET ativo = ? WHERE id_tarefa = ?";
+
+        try (Connection conn = new ConexaoDB().abrirConexao();
+                PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            ps.setBoolean(1, ativo);
+            ps.setInt(2, id_tarefa);
+            ps.executeUpdate();
+
+            ps.close();
+            System.out.println("passei no DAO");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

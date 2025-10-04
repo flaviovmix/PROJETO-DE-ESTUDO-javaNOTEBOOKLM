@@ -19,6 +19,7 @@ public class TarefaRender {
     public static String renderizar(TarefaBean tarefa) {
         StringBuilder sb = new StringBuilder();
         String ativoInativo = tarefa.isAtivo() ? "" : " opaco";
+        String checked = tarefa.isAtivo() ? "" : "checked";
 
         sb.append("    <div class=\"task " + tarefa.getPrioridade() + "\">\n");
 
@@ -66,18 +67,15 @@ public class TarefaRender {
         sb.append(Utilidades.dateToString(tarefa.getData_conclusao(), "EEEE, dd 'de' MMM 'de' yyyy"));
         sb.append("              </strong></div>\n");
 
-        sb.append("              <form action=\"#\" method=\"get\" style=\"display:inline;\">\n");
-        sb.append("                <input type=\"hidden\" name=\"estado_atual\" value=\"true\">\n");
-        sb.append("                <input type=\"hidden\" name=\"id_tarefa\" value=\"" + tarefa.getId_tarefa() + "\">\n");
+        
+        sb.append("  <form action=\"tarefa\" method=\"post\" style=\"display:inline;\">\n");
+        sb.append("    <input type=\"hidden\" name=\"acao\" value=\"alterar\">\n");
+        sb.append("    <input type=\"hidden\" name=\"id_tarefa\" value=\"" + tarefa.getId_tarefa() + "\">\n");
+        sb.append("    <input type=\"hidden\" name=\"estado_atual\" value=\"" + tarefa.isAtivo() + "\">\n");
+        sb.append("    <input type=\"checkbox\" " + checked + " onchange=\"this.form.submit()\">\n");
+        sb.append("  </form>\n");
 
-        if (!tarefa.isAtivo()) {
-            sb.append("                <input type=\"checkbox\" name=\"inativo\" checked>\n");
-        } else {
-            sb.append("                <input type=\"checkbox\" name=\"inativo\">\n");
-        }
-
-        sb.append("              </form>\n");
-
+        
         sb.append("            </div>\n"); // fecha usuario_concluir
         sb.append("          </label>\n");
         sb.append("        </div>\n");
