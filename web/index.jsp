@@ -6,11 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%
-    TarefaDAO tarefaDAO = new TarefaDAO();
-    List<TarefaBean> tarefasAtivas = tarefaDAO.listarTarefas(true);
-    List<TarefaBean> tarefasInativas = tarefaDAO.listarTarefas(false);
-%>
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -48,9 +44,7 @@
       <!-- Conteúdo da Aba: ATIVAS -->
       <div class="tab-content content-ativas">
         <div class="task-list ">
-            <% for (TarefaBean tarefa : tarefasAtivas) {  %>
-              <%= TarefaRender.renderizar(tarefa) %>
-            <% } %>
+             <%= TarefaRender.tarefasAtivaInativas(true) %>
         </div>
       </div>
 
@@ -58,9 +52,7 @@
       <!-- Conteúdo da Aba: INATIVAS -->
       <div class="tab-content content-inativas">
         <div class="task-list ">
-          <% for (TarefaBean tarefa : tarefasInativas) {  %>
-            <%= TarefaRender.renderizar(tarefa) %>
-          <% } %>
+          <%= TarefaRender.tarefasAtivaInativas(false) %>
         </div>
       </div>
     </div>
@@ -162,12 +154,6 @@
 
   <script src="./js/index.js"></script>
   <script src="./js/Utilidades.js"></script>
-
-
-
-
-
-
 
 </body>
 

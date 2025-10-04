@@ -13,10 +13,21 @@ public class TarefaDAO {
     public List<TarefaBean> listarTarefas(boolean ativoOuInativo) {
         List<TarefaBean> lista = new ArrayList<>();
 
-        String sql = "SELECT * FROM tarefas WHERE ativo = ?";
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("SELECT tarefas.* , (");
+
+            sql.append("SELECT COUNT(*) ");
+
+                sql.append("FROM detalhes_tarefa ");
+                sql.append("WHERE detalhes_tarefa.fk_tarefa = tarefas.id_tarefa ");
+
+            sql.append(") AS quantidade_de_subtarefas ");
+
+        sql.append("FROM tarefas WHERE ativo = ? ");
 
         try (Connection conn = new ConexaoDB().abrirConexao();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
 
             // aqui você passa o valor do parâmetro ?
             ps.setBoolean(1, ativoOuInativo);

@@ -1,9 +1,21 @@
 package app.tarefas;
 
 import app.Utilidades;
+import java.util.List;
 
 public class TarefaRender {
-    
+
+    public static String tarefasAtivaInativas(boolean ativo) {
+        TarefaDAO dao = new TarefaDAO();
+        List<TarefaBean> tarefas = dao.listarTarefas(ativo);
+
+        StringBuilder sb = new StringBuilder();
+        for (TarefaBean tarefa : tarefas) {
+            sb.append(renderizar(tarefa));
+        }
+        return sb.toString();
+    }
+
     public static String renderizar(TarefaBean tarefa) {
         StringBuilder sb = new StringBuilder();
         String ativoInativo = tarefa.isAtivo() ? "" : " opaco";
@@ -22,7 +34,7 @@ public class TarefaRender {
 
         sb.append("          <a href=\"novaTarefa.html\" class=\"link-sem-estilo\">\n");
         sb.append("            <span><i class=\"fas fa-layer-group\"></i>");
-        sb.append("0 etapas");
+        sb.append(tarefa.getQuantidade_de_subtarefas() + " etapas");
         sb.append("</span>\n");
         sb.append("          </a>\n");
 
@@ -56,9 +68,14 @@ public class TarefaRender {
 
         sb.append("              <form action=\"#\" method=\"get\" style=\"display:inline;\">\n");
         sb.append("                <input type=\"hidden\" name=\"estado_atual\" value=\"true\">\n");
-        sb.append("                <input type=\"hidden\" name=\"inativo\" value=\"0\">\n");
-        sb.append("                <input type=\"hidden\" name=\"id_tarefa\" value=\"118\">\n");
-        sb.append("                <input type=\"checkbox\" name=\"inativo\" checked>\n");
+        sb.append("                <input type=\"hidden\" name=\"id_tarefa\" value=\"" + tarefa.getId_tarefa() + "\">\n");
+
+        if (!tarefa.isAtivo()) {
+            sb.append("                <input type=\"checkbox\" name=\"inativo\" checked>\n");
+        } else {
+            sb.append("                <input type=\"checkbox\" name=\"inativo\">\n");
+        }
+
         sb.append("              </form>\n");
 
         sb.append("            </div>\n"); // fecha usuario_concluir
@@ -73,9 +90,7 @@ public class TarefaRender {
 
         sb.append("    </div>\n"); // fecha task
 
-        
         return sb.toString();
-
     }
-    
+
 }
