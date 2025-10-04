@@ -5,9 +5,9 @@ import java.util.List;
 
 public class TarefaRender {
 
-    public static String tarefasAtivaInativas(boolean ativo) {
+    public static String tarefasAtivaInativas(boolean ativoInativo) {
         TarefaDAO dao = new TarefaDAO();
-        List<TarefaBean> tarefas = dao.listarTarefas(ativo);
+        List<TarefaBean> tarefas = dao.listarTarefas(ativoInativo);
 
         StringBuilder sb = new StringBuilder();
         for (TarefaBean tarefa : tarefas) {
