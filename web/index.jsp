@@ -31,7 +31,14 @@
       </a>
     </div>
   </header>
-
+<div id="cronometro" 
+     style="position: fixed; bottom: 10px; right: 15px; 
+            background: rgba(0,0,0,0.6); color: #fff; 
+            padding: 6px 12px; border-radius: 6px; 
+            font-family: monospace; font-size: 14px; 
+            z-index: 9999;">
+  00:00:00
+</div>
   <div class="task-list ">
     <div class="tabs">
       <!-- Radios controlam as abas -->
@@ -42,19 +49,15 @@
       <label for="tab-inativas">Concluídas</label>
     
       <!-- Conteúdo da Aba: ATIVAS -->
-      <div class="tab-content content-ativas">
-        <div class="task-list ">
-             <%= TarefaRender.tarefasAtivaInativas(true) %>
+        <div class="tab-content content-ativas">
+          <div id="lista-ativas" class="task-list"></div>
         </div>
-      </div>
 
       
       <!-- Conteúdo da Aba: INATIVAS -->
-      <div class="tab-content content-inativas">
-        <div class="task-list ">
-          <%= TarefaRender.tarefasAtivaInativas(false) %>
+        <div class="tab-content content-inativas">
+          <div id="lista-inativas" class="task-list"></div>
         </div>
-      </div>
     </div>
   </div>
 
@@ -156,6 +159,31 @@
   <script src="./js/Utilidades.js"></script>
   
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Carrega as tarefas ativas ao iniciar
+      carregarTarefas(true);
+
+      // Quando clicar nas abas, recarrega via AJAX
+      document.getElementById("tab-ativas").addEventListener("change", () => carregarTarefas(true));
+      document.getElementById("tab-inativas").addEventListener("change", () => carregarTarefas(false));
+    });
+
+    function carregarTarefas(ativas) {
+      fetch("tarefaLista?ativas=" + ativas)
+        .then(resp => resp.text())
+        .then(html => {
+          if (ativas) {
+            document.getElementById("lista-ativas").innerHTML = html;
+          } else {
+            document.getElementById("lista-inativas").innerHTML = html;
+          }
+        })
+        .catch(err => console.error("Erro ao carregar tarefas:", err));
+    }
+</script>
+
+  
+<script>
     function alterarEstado(checkbox) {
       const form = checkbox.form;
       const id_tarefa = form.querySelector('[name=id_tarefa]').value;
@@ -168,14 +196,22 @@
       })
       .then(response => {
         if (!response.ok) throw new Error('Erro na requisição');
-        // Atualiza visualmente sem recarregar
-        const linha = checkbox.closest('.task');
-        linha.style.display = "none";
+        const linha = checkbox.closest('.task').remove();
+        linha.remove();
       })
       .catch(error => console.error('Falha ao atualizar:', error));
     }
 </script>
-
+<script>
+let segundos = 0;
+setInterval(() => {
+  segundos++;
+  const horas = String(Math.floor(segundos / 3600)).padStart(2, '0');
+  const minutos = String(Math.floor((segundos % 3600) / 60)).padStart(2, '0');
+  const segs = String(segundos % 60).padStart(2, '0');
+  document.getElementById('cronometro').textContent = `${horas}:${minutos}:${segs}`;
+}, 1000);
+</script>
 
 </body>
 

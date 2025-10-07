@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class TarefaServlet extends HttpServlet {
+public class TarefaAtivaInativaServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -31,6 +31,5 @@ public class TarefaServlet extends HttpServlet {
 
         }
 
-        response.sendRedirect("index.jsp");
     }
 }

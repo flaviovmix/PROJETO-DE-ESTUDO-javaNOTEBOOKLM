@@ -3,13 +3,23 @@
 <web-app>
 
     <servlet>
-        <servlet-name>TarefaServlet</servlet-name>
-        <servlet-class>app.tarefas.TarefaServlet</servlet-class>
+        <servlet-name>TarefaAtivaInativaServlet</servlet-name>
+        <servlet-class>app.tarefas.TarefaAtivaInativaServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>TarefaServlet</servlet-name>
+        <servlet-name>TarefaAtivaInativaServlet</servlet-name>
         <url-pattern>/tarefa</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>TarefaListaServlet</servlet-name>
+        <servlet-class>app.tarefas.TarefaListaServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TarefaListaServlet</servlet-name>
+        <url-pattern>/tarefaLista</url-pattern>
+    </servlet-mapping>    
 
 </web-app>
